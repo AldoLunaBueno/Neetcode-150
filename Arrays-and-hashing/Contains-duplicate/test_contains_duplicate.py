@@ -28,3 +28,6 @@ class Test(unittest.TestCase):
     def assertContainsDuplicate(self, lists, boolean):
         for nums in lists:
             self.assertEqual(Solution.containsDuplicate(self, nums), boolean)
+
+if __name__=='__main__':
+    unittest.main()
