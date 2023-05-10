@@ -45,3 +45,47 @@ def containsDuplicate(self, nums: list[int]) -> bool:
         hashset.add(x)
     return False
 ```
+
+## 242. Valid Anagram
+
+**Desarrollo**
+
+```py
+def isAnagram(self, s: str, t: str) -> bool:
+    sSort = list(s)
+    sSort.sort()
+    tSort = list(t)
+    tSort.sort()
+    
+    if sSort == tSort:
+        return True
+    return False
+```
+
+![](sources/2023-05-09-19-29-07.png)
+
+
+
+
+```py
+def strToDict(s: str) -> dict:
+    sDict = {}
+    for e in list(s):
+        if e in sDict:                
+            sDict[e] += 1
+        else:
+            sDict[e] = 1
+    return sDict
+
+```
+![](sources/2023-05-09-20-23-47.png)
+
+
+```py
+def isAnagram(self, s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+    ...
+```
+
+![](sources/2023-05-09-20-51-53.png)
