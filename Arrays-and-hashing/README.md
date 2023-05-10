@@ -89,3 +89,13 @@ def isAnagram(self, s: str, t: str) -> bool:
 ```
 
 ![](sources/2023-05-09-20-51-53.png)
+
+```py
+def strToDict(s: str) -> dict:
+    sDict = {}
+    for e in s:
+        sDict[e] = 1 + sDict.get(e, 0)
+    return sDict
+```
+
+![](sources/2023-05-10-13-44-54.png)
