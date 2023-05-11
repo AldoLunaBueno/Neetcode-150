@@ -15,8 +15,8 @@ class Test(unittest.TestCase):
         self.assertEqual(result, [1, 3])
 
     def test_negatives(self):
-        result = Solution.twoSum(self, [-2, 1, 1, 6], 4)
-        self.assertEqual(result, [0, 3])
+        result = Solution.twoSum(self, [-2, 1, 6, 7], 4)
+        self.assertEqual(result, [0, 2])
         result = Solution.twoSum(self, [-2, -1, 5, -2], -4)
         self.assertEqual(result, [0, 3])
 

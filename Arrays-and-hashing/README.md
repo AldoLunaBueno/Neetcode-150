@@ -110,13 +110,36 @@ You can return the answer in any order.
 
 **Desarrollo**
 
+Este es nuestro primer intento, muy ingenuo:
+
 ```py
-def twoSum(self, nums: list[int], target: int) -> list[int]:
-    for i, x in enumerate(nums[:-1]):
-        for j, y in enumerate(nums[i+1:]):
+def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | O(n^2)
+    for i, x in enumerate(nums[:-1]):           # O(n)
+        for j, y in enumerate(nums[i+1:]):      # O(n)
             if x + y == target:
                 return [i, 1+i+j]
 ```
 
 ![](sources/2023-05-10-19-38-56.png)
 
+
+En el siguiente intento uso la técnica de los dos punteros. Para ello es necesario ordenar la lista y, como nos piden índices, debemos poder rastrear de qué posición vino un número. Antes de ordenar la lista podemos usar la función `enumerate()` para emparejar en tuplas índices y valores. Podríamos usar el método `list.sort()` o `sorted()`. Usamos el segundo porque no ordena la lista modificando la original, sino que la entrega como valor de retorno.
+
+https://stackoverflow.com/questions/6422700/how-to-get-indices-of-a-sorted-array-in-python
+
+```py
+def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | O(n)
+    nums = sorted(enumerate(nums), key= lambda x: x[1])
+    for i in nums:                      # O(r)
+        for j in nums[::-1]:            # O(l), donde r + l < n (r: avance de i; l: avance de j)
+            if i[1] + j[1] < target:    
+                break
+            elif i[1] + j[1] > target:
+                continue
+            else:
+                r = [i[0], j[0]]
+                r.sort()
+                return r
+```
+
+![](sources/2023-05-10-20-48-08.png)
