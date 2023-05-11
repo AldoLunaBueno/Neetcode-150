@@ -143,3 +143,57 @@ def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | 
 ```
 
 ![](sources/2023-05-10-20-48-08.png)
+
+```py
+def twoSum(self, nums: list[int], target: int) -> list[int]:
+    numsSet = set(nums)
+    copy = numsSet.copy()
+    for x in numsSet:
+        if target - x in copy:
+            if x != target - x:
+                ind1 = nums.index(x)
+                ind2 = nums.index(target - x)
+                r = [ind1, ind2]
+                r.sort()
+                return r
+            else:
+                ind1 = nums.index(x)
+                nums.pop(ind1)
+                nums.insert(ind1, None)
+                try:
+                    ind2 = nums.index(target - x)
+                except:
+                    copy.remove(x)
+                    continue
+                r = [ind1, ind2]
+                r.sort()
+                return r
+        copy.remove(x)
+```
+
+![](sources/2023-05-11-13-16-07.png)
+
+No estamos obligados a crear una copia para eliminar los elementos visitados. Si no lo hacemos, liberamos un poco de memoria a cambia de un poco de velocidad.
+
+```py
+def twoSum(self, nums: list[int], target: int) -> list[int]:
+    numsSet = set(nums)
+    for x in numsSet:
+        if target - x in numsSet:
+            if x != target - x:
+                ind1 = nums.index(x)
+                ind2 = nums.index(target - x)                    
+            else:
+                ind1 = nums.index(x)
+                nums.pop(ind1)
+                nums.insert(ind1, None)
+                try:
+                    ind2 = nums.index(target - x)
+                except ValueError:
+                    continue
+            r = [ind1, ind2]
+            r.sort()
+            return r
+```
+
+![](sources/2023-05-11-13-33-45.png)

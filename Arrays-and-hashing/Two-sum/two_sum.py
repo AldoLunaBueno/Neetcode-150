@@ -3,18 +3,21 @@ class Solution:
         """
         Given an array of integers 'nums' and an integer 'target', 
         return indices of the two numbers such that they add up to 'target'.        
-        """        
-        nums = sorted(enumerate(nums), key= lambda x: x[1])
-        for i in nums:
-            for j in nums[::-1]:
-                if i[1] + j[1] < target:
-                    break
-                elif i[1] + j[1] > target:
-                    continue
+        """
+        numsSet = set(nums)
+        for x in numsSet:
+            if target - x in numsSet:
+                if x != target - x:
+                    ind1 = nums.index(x)
+                    ind2 = nums.index(target - x)                    
                 else:
-                    r = [i[0], j[0]]
-                    r.sort()
-                    return r
-
-# print(Solution.twoSum(Solution, [-2, 1, 6, 7], 4))
-
+                    ind1 = nums.index(x)
+                    nums.pop(ind1)
+                    nums.insert(ind1, None)
+                    try:
+                        ind2 = nums.index(target - x)
+                    except ValueError:
+                        continue
+                r = [ind1, ind2]
+                r.sort()
+                return r
