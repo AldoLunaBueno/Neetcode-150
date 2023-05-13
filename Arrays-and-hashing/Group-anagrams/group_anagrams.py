@@ -5,10 +5,7 @@ class Solution:
         for str in strs:
             frec = {}
             for c in str:
-                if c in frec:
-                    frec[c] += 1
-                else:
-                    frec[c] = 1
+                frec[c] = 1 + frec.get(c, 0)
             frec = tuple(sorted(frec.items())) # make frec hashable
             index = groupDict.get(frec)
             if index is None:

@@ -211,23 +211,55 @@ def twoSum(self, nums: list[int], target: int) -> list[int]:
 ```py
 def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
     groups = []
-    groupDict = {}
-    for str in strs:
-        frec = {}
-        for c in str:
-            if c in frec:
-                frec[c] += 1
-            else:
-                frec[c] = 1
-        frec = tuple(sorted(frec.items())) # make frec hashable
-        index = groupDict.get(frec)
-        if index is None:
-            index = len(groups)
-            groups.append([])                
-            groupDict[frec] = index           
-        groups[index].append(str)
-    return groups
+        groupDict = {}
+        for str in strs:
+            frec = {}
+            for c in str:
+                frec[c] = 1 + frec.get(c, 0)
+            frec = tuple(sorted(frec.items())) # make frec hashable
+            index = groupDict.get(frec)
+            if index is None:
+                index = len(groups)
+                groups.append([])                
+                groupDict[frec] = index           
+            groups[index].append(str)
+        return groups
 ```
 
 ![](sources/2023-05-13-11-35-20.png)
 
+
+¿Qué habría pasado si en la línea A hubieramos no hubieramos usado el método `dict.items()`? ¿Qué tal si en su lugar hubieramos usado el contructor `list()`? De hecho, habría hecho esto si no lo hubiera buscado en un foro:
+
+```py
+frec = tuple(sorted(list(frec)))
+```
+
+Lo que hace `list(frec)` no es convertir el diccionario `frec` en una lista de sus pares clave-valor, como es natural pensar. En su lugar, nos da una lista solo de las claves. Y, aunque no lo parezca, casi pasa todos los casos de prueba:
+
+![](sources/2023-05-13-12-20-18.png)
+
+Pero ¿qué rayos es lo que salió mal? Lo que hice en su momento para saberlo fue una depuración del código de prueba. Nunca en mi vida había hecho algo así. Se puede decir que refactorice mis pruebas unitarias hasta cierto punto, y eso hace que su implementación sea legible:
+
+![](sources/2023-05-13-12-31-39.png)
+
+Pero el mensaje de error que mostré antes no es legible. El módulo `DeepDiff` es fantástico para comparar cosas, pero cuando no son iguales es difícil saber en qué difieren. Entonces queremos personalizar el mensaje de error _AssertionError_. Para ello modificamos el método `assertEqualIgnoringOrder()`:
+
+```py
+def assertEqualIgnoringOrder(self, results: list[str], expected: list[str]):
+    for i, result in enumerate(results):
+        if DeepDiff(result, expected[i], ignore_order=True) != {}:
+            info = f'''Lists are not equal ignoring order.
+            result =   {result}
+            expected = {expected[i]}
+            '''
+            assert False, info
+```
+
+![](sources/2023-05-13-12-45-10.png)
+
+Y ahora el mensaje de error es mucho más claro:
+
+![](sources/2023-05-13-12-58-27.png)
+
+Se puede comparar fácilmente el resultado con el valor esperado para encontrar su diferencia.

@@ -29,7 +29,12 @@ class Test(unittest.TestCase):
 
     def assertEqualIgnoringOrder(self, results: list[str], expected: list[str]):
         for i, result in enumerate(results):
-            self.assertEqual(DeepDiff(result, expected[i], ignore_order=True), {})
+            if DeepDiff(result, expected[i], ignore_order=True) != {}:
+                info = f'''Lists are not equal ignoring order.
+                result =   {result}
+                expected = {expected[i]}
+                '''
+                assert False, info
 
 if __name__=='__main__':
     unittest.main()
