@@ -1,4 +1,10 @@
-# Arrays and Hashing
+# Arrays and Hashing <!-- omit in toc -->
+
+- [217. Contains Duplicate](#217-contains-duplicate)
+- [242. Valid Anagram](#242-valid-anagram)
+- [1. Two Sum](#1-two-sum)
+- [Group Anagrams](#group-anagrams)
+
 
 ## 217. Contains Duplicate
 
@@ -100,7 +106,7 @@ def strToDict(s: str) -> dict:
 
 ![](sources/2023-05-10-13-44-54.png)
 
-## Two Sum
+## 1. Two Sum
 
 Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
 
@@ -199,3 +205,29 @@ def twoSum(self, nums: list[int], target: int) -> list[int]:
 ```
 
 ![](sources/2023-05-11-13-33-45.png)
+
+## Group Anagrams
+
+```py
+def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+    groups = []
+    groupDict = {}
+    for str in strs:
+        frec = {}
+        for c in str:
+            if c in frec:
+                frec[c] += 1
+            else:
+                frec[c] = 1
+        frec = tuple(sorted(frec.items())) # make frec hashable
+        index = groupDict.get(frec)
+        if index is None:
+            index = len(groups)
+            groups.append([])                
+            groupDict[frec] = index           
+        groups[index].append(str)
+    return groups
+```
+
+![](sources/2023-05-13-11-35-20.png)
+

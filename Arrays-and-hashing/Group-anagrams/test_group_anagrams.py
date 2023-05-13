@@ -10,22 +10,22 @@ class Test(unittest.TestCase):
         Test.assertEqualIgnoringOrder(self, results, expected)
 
     def test_one_group(self):
-        arranges = [["", "a"],     ["ab", "ba"],   ["bab", "abb", "bba"]]        
-        expected = [[[""], ["a"]], [["ab", "ba"]], [["abb", "bab", "bba"]]]
+        arranges = [["ab", "ba"],   ["bab", "abb", "bba"]]        
+        expected = [[["ab", "ba"]], [["abb", "bab", "bba"]]]
         results = [sol.groupAnagrams(self, arrange) for arrange in arranges]
         Test.assertEqualIgnoringOrder(self, results, expected)
 
     def test_two_groups(self):
-        arranges = [["ab", "ba", "ac", "ca"],     ["abb", "bab", "baa", ]]
-        expected = [[["ab", "ba"], ["ac", "ca"]], [["abb", "bab"], ["baa"]]]
+        arranges = [["", "a"],     ["ab", "ba", "ac", "ca"],     ["abb", "bab", "baa"]]
+        expected = [[[""], ["a"]], [["ab", "ba"], ["ac", "ca"]], [["abb", "bab"], ["baa"]]]
         results = [sol.groupAnagrams(self, arrange) for arrange in arranges]
-        Test.assertEqualIgnoringOrder(self, arranges, expected)
+        Test.assertEqualIgnoringOrder(self, results, expected)
 
     def test_more_groups(self):
         arranges = [["eat", "tea", "tan", "ate", "nat", "bat"]]
         expected = [[["bat"], ["nat", "tan"], ["ate", "eat", "tea"]]]
         results = [sol.groupAnagrams(self, arrange) for arrange in arranges]
-        Test.assertEqualIgnoringOrder(self, arranges, expected)
+        Test.assertEqualIgnoringOrder(self, results, expected)
 
     def assertEqualIgnoringOrder(self, results: list[str], expected: list[str]):
         for i, result in enumerate(results):
