@@ -113,7 +113,7 @@ You can return the answer in any order.
 Este es nuestro primer intento, muy ingenuo:
 
 ```py
-def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | O(n^2)
+def twoSum(self, nums: list[int], target: int) -> list[int]:
     for i, x in enumerate(nums[:-1]):           # O(n)
         for j, y in enumerate(nums[i+1:]):      # O(n)
             if x + y == target:
@@ -128,10 +128,11 @@ En el siguiente intento uso la técnica de los dos punteros. Para ello es necesa
 https://stackoverflow.com/questions/6422700/how-to-get-indices-of-a-sorted-array-in-python
 
 ```py
-def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | O(n)
+def twoSum(self, nums: list[int], target: int) -> list[int]:
     nums = sorted(enumerate(nums), key= lambda x: x[1])
-    for i in nums:                      # O(r)
-        for j in nums[::-1]:            # O(l), donde r + l < n (r: avance de i; l: avance de j)
+    # r + l < n (r: avance de i; l: avance de j)
+    for i in nums:                      # O(right)
+        for j in nums[::-1]:            # O(left)
             if i[1] + j[1] < target:    
                 break
             elif i[1] + j[1] > target:
@@ -140,6 +141,7 @@ def twoSum(self, nums: list[int], target: int) -> list[int]: # n := len(nums) | 
                 r = [i[0], j[0]]
                 r.sort()
                 return r
+        
 ```
 
 ![](sources/2023-05-10-20-48-08.png)
