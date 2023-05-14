@@ -1,16 +1,13 @@
+from collections import defaultdict
+
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        groups = []
-        groupDict = {}
-        for str in strs:
-            frec = {}
-            for c in str:
-                frec[c] = 1 + frec.get(c, 0)
-            frec = tuple(sorted(frec.items())) # make frec hashable
-            index = groupDict.get(frec)
-            if index is None:
-                index = len(groups)
-                groups.append([])                
-                groupDict[frec] = index           
-            groups[index].append(str)
-        return groups
+        groups = defaultdict(list) # It's a wrapper: group["new key"] == [] (default)
+        for s in strs:
+            frec = [0] * 26 # english alphabet
+            for c in s:
+                c = ord(c) - ord("a") # char ascii position relative to "a"
+                frec[c] += 1
+            frec = tuple(frec)  # make frec hashable
+            groups[frec].append(s)
+        return list(groups.values())

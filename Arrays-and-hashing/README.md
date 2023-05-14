@@ -263,3 +263,48 @@ Y ahora el mensaje de error es mucho más claro:
 ![](sources/2023-05-13-12-58-27.png)
 
 Se puede comparar fácilmente el resultado con el valor esperado para encontrar su diferencia.
+
+**Versión 2**
+
+Hay dos cosas que podríamos refactorizar. La primera es que no tiene mucho sentido separar las tuplas de conteo y los grupos de anagramas estableciendo una variable intermedia `index`. ¿Por qué no crear un diccionario en donde la clave es la tupla y el valor es una lista de anagramas del mismo grupo? Eso es lo primero que simplificamos.
+
+Y lo segundo es que es un poco feo establecer como valor para cada nueva clave una lista vacía. Si `d` es un diccionario normal, entonces ```d["nueva clave"] = "valor"``` es posible, pero ```d["nueva clave"].append("valor")``` arroja el error `KeyError`. Investigando sobre diccionarios encontramos un módulo llamado `defaultdict`, que maneja por nosotros el KeyError al establecer un valor por defecto parea una nueva clave. Este valor por defecto no se puede pasar directamente, sino que lo tiene que entregar un método o función pasado por referencia (sin los paréntesis de llamada). Usamos `list`, pero podríamos haber usado `lambda: []`.
+
+Este es el resultado:
+
+```py
+from collections import defaultdict
+class Solution:
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+        groups = defaultdict(list) # It's a wrapper: group["new key"] == [] (default value)
+        for s in strs:
+            frec = {}
+            for c in s:
+                frec[c] = 1 + frec.get(c, 0)
+            frec = tuple(sorted(frec.items())) # make frec hashable            
+            groups[frec].append(s)
+        return list(groups.values())
+```
+
+![](sources/2023-05-13-19-26-45.png)
+
+No mejoró en nada el rendimiento, pero sí la legibilidad.
+
+**Versión 3**
+
+Esto es casi lo que se presenta como solución. Como se ve, no es muy distinto a lo que obtuvimos en la anterior versión. Disminuye ligeramente el consumo de memoria.
+
+```py
+def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+    groups = defaultdict(list) # It's a wrapper: group["new key"] == [] (default value)
+    for s in strs:
+        frec = [0] * 26 # english alphabet
+        for c in s:
+            c = ord(c) - ord("a") # char ascii position relative to "a"
+            frec[c] += 1
+        frec = tuple(frec)  # make frec hashable
+        groups[frec].append(s)
+    return list(groups.values())
+```
+
+![](sources/2023-05-13-20-14-48.png)
