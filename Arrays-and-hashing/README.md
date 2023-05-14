@@ -339,3 +339,25 @@ def topKFrequent(self, nums: list[int], k: int) -> list[int]:
 ![](sources/2023-05-14-00-22-19.png)
 
 ¿El algoritmo bucket sort será mejor?
+
+```py
+def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+    freq = {}
+    for n in nums:
+        freq[n] = 1 + freq.get(n, 0)
+    
+    maxFreq = max(freq.values())
+    bucket = [[] for i in range(maxFreq+1)]
+    for key, v in freq.items():
+        bucket[v].append(key)
+
+    res = []
+    for l in bucket[::-1]:
+        if len(res) < k:
+            res.extend(l)
+        else:
+            break
+    return res[:k]
+```
+
+![](sources/2023-05-14-13-29-59.png)

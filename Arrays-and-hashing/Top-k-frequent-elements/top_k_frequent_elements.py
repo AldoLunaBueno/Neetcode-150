@@ -7,10 +7,17 @@ class Solution:
         freq = {}
         for n in nums:
             freq[n] = 1 + freq.get(n, 0)
+        
+        maxFreq = max(freq.values())
+        bucket = [[] for i in range(maxFreq+1)]
+        for key, v in freq.items():
+            bucket[v].append(key)
+
         res = []
-        for i in range(k):
-            t = max(freq, key = lambda x: freq[x])
-            freq.pop(t)
-            res.append(t)
-        return res
+        for l in bucket[::-1]:
+            if len(res) < k:
+                res.extend(l)
+            else:
+                break
+        return res[:k]
             
