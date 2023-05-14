@@ -3,7 +3,8 @@
 - [217. Contains Duplicate](#217-contains-duplicate)
 - [242. Valid Anagram](#242-valid-anagram)
 - [1. Two Sum](#1-two-sum)
-- [Group Anagrams](#group-anagrams)
+- [49. Group Anagrams](#49-group-anagrams)
+- [347. Top K Frequent Elements](#347-top-k-frequent-elements)
 
 
 ## 217. Contains Duplicate
@@ -206,7 +207,7 @@ def twoSum(self, nums: list[int], target: int) -> list[int]:
 
 ![](sources/2023-05-11-13-33-45.png)
 
-## Group Anagrams
+## 49. Group Anagrams
 
 ```py
 def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
@@ -308,3 +309,33 @@ def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
 ```
 
 ![](sources/2023-05-13-20-14-48.png)
+
+## 347. Top K Frequent Elements
+
+```py
+def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+    freq = {}
+    for n in nums:
+        freq[n] = 1 + freq.get(n, 0)
+    freq = sorted(freq.items(), key = lambda x: x[1] , reverse = True)
+    return [i for i, j in freq[:k]]
+```
+
+![](sources/2023-05-13-23-34-01.png)
+
+```py
+def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+    freq = {}
+    for n in nums:
+        freq[n] = 1 + freq.get(n, 0)
+    res = []
+    for i in range(k):
+        t = max(freq, key = lambda x: freq[x])
+        freq.pop(t)
+        res.append(t)
+    return res
+```
+
+![](sources/2023-05-14-00-22-19.png)
+
+¿El algoritmo bucket sort será mejor?
