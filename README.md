@@ -10,6 +10,9 @@ Este una buenísima referencia que encontré acerca del uso de la biblioteca _un
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6tNS--WetLI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+Este es [otro video](https://www.youtube.com/watch?v=5ufpsjfk99U&t=326s) muy bueno que habla de _pytest_.
+
+
 Aparte de la implementación de las soluciones y las pruebas, también agregaré a cada pregunta explicaciones y preguntas clave para repasar más adelante. Así no se me olvidará cómo ataqué los problemas.
 
 ![](sources/2023-05-08-12-24-42.png)
