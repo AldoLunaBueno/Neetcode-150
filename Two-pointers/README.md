@@ -1,6 +1,7 @@
 # Two Pointers <!-- omit in toc -->
 
 - [125. Valid Palindrome](#125-valid-palindrome)
+- [Two Sum II](#two-sum-ii)
 
 
 ## 125. Valid Palindrome
@@ -60,3 +61,19 @@ def isPalindrome(self, s: str) -> bool:
 ```
 
 ![](sources/2023-05-31-20-28-24.png)
+
+## Two Sum II
+
+```python
+def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        left, right = 0, len(numbers) -1
+        while left < right:
+            if numbers[left] + numbers[right] < target:
+                left += 1
+            elif numbers[left] + numbers[right] > target:
+                right += -1
+            else:
+                return [left+1, right+1]
+```
+
+![](sources/2023-06-04-22-23-55.png)
