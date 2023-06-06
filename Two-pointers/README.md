@@ -2,7 +2,9 @@
 
 - [125. Valid Palindrome](#125-valid-palindrome)
 - [Two Sum II](#two-sum-ii)
+- [3Sum](#3sum)
 
+En este nivel del mapa de algoritmos vamos a usar otra biblioteca de pruebas llamada pytest. Hemos usado `assert` en algunas pruebas. Se recomienda usarlo para hacer testing [en esta página.](https://realpython.com/python-assert-statement/#testing-your-code-with-assertions)
 
 ## 125. Valid Palindrome
 
@@ -77,3 +79,41 @@ def twoSum(self, numbers: list[int], target: int) -> list[int]:
 ```
 
 ![](sources/2023-06-04-22-23-55.png)
+
+## 3Sum
+
+```python
+def threeSum(self, nums: list[int]) -> list[list[int]]:
+    nums = sorted(nums)        
+    res = set()
+    n = len(nums)
+    for k in range(n-2):
+        i, j = k+1, n-1
+        # Two sum
+        target = -nums[k]
+        while i < j:
+            twoSum = nums[i] + nums[j]
+            if twoSum < target:
+                i += 1
+            elif twoSum > target:
+                j += -1
+            else:
+                res.add((nums[k], nums[i], nums[j]))
+                i += 1
+    # Tuples to arrays
+    res = [[*tup] for tup in res]
+    return res
+```
+
+![](sources/2023-06-05-16-26-39.png)
+
+**Versión 2**
+
+```python
+
+for k in range(n-2):
+    if k>0 and nums[k] == nums[k-1]:
+        continue
+```
+
+![](sources/2023-06-05-18-54-28.png)
