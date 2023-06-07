@@ -34,3 +34,50 @@ for c in s:
 
 ![](sources/2023-06-06-10-59-42.png)
 
+## Min Stack
+
+```python
+class MinStack:
+    def __init__(self):
+        self.arr = []
+
+    def push(self, val: int) -> None:
+        self.arr.append(val)
+
+    def pop(self) -> None:
+        self.arr.pop()
+
+    def top(self) -> int:
+        return self.arr[-1]
+
+    def getMin(self) -> int:
+        return min(self.arr)
+```
+
+![](sources/2023-06-06-15-04-14.png)
+
+```python
+class MinStack:
+    def __init__(self):
+        self.arr = []
+        self.eachMin = [2**31-1]
+
+    def push(self, val: int) -> None:
+        self.arr.append(val)
+        if val < self.eachMin[-1]:
+            self.eachMin.append(val)
+        else:
+            self.eachMin.append(self.eachMin[-1])
+
+    def pop(self) -> None:
+        self.arr.pop()
+        self.eachMin.pop()
+
+    def top(self) -> int:
+        return self.arr[-1]
+
+    def getMin(self) -> int:
+        return self.eachMin[-1]
+```
+
+![](sources/2023-06-06-16-28-31.png)
