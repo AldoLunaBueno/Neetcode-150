@@ -99,13 +99,17 @@ def threeSum(self, nums: list[int]) -> list[list[int]]:
                 j += -1
             else:
                 res.add((nums[k], nums[i], nums[j]))
-                i += 1
+                i += 1 # A
     # Tuples to arrays
     res = [[*tup] for tup in res]
     return res
 ```
 
 ![](sources/2023-06-05-16-26-39.png)
+
+¿Qué hace la línea A y por qué?
+
+Si la ejecución llega hasta la línea A, significa que encontramos un triplete que suma cero. ¿Debemos buscar ahora para otro valor de k? No, porque podría haber más tripletes que suman cero con el mismo k. Entonces, debemos seguir moviendo los punteros i y j a ver si encontramos más. El problema es que mover cualquiera de los punteros significa descartar soluciones. Si movemos i, estamos descartando los pares (i, j-1), (i, j-2)... ¿Esto es legítimo? Por supuesto. Como el arreglo está ordenado en forma creciente, hay dos casos posibles: nums[j-1] < nums[j] o nums[j-1] = nums[j]. En el primer caso, nums[i] +nums[j-1] < nums[i] +nums[j] = target, así que no hay problema en descartar los elementos j-1 hacia abajo. En el segundo caso, nums[i] +nums[j-1] = nums[i] +nums[j] = target, así que forman un triplete que suma cero junto con nums[k], ¡y lo estamos descartando! Pero esto no es un problema porque el enunciado nos pide que nose repita nigún triplete. Entonces, podemos mover i sin problemas. De hecho, también podríamos haber movido j en lugar de i.
 
 **Versión 2**
 
