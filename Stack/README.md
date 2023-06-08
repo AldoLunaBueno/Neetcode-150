@@ -81,3 +81,8 @@ class MinStack:
 ```
 
 ![](sources/2023-06-06-16-28-31.png)
+
+
+## Evaluating reverse Polish notation
+
+![](sources/2023-06-08-10-40-08.png)
